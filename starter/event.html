@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Event</title>
+    <style>
+        img {
+            opacity: 1;
+            transition: opacity 1s;
+        }
+        img.hide {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 버튼 테스트 -->
+        <div>
+            <button @click="clickHandler">버튼 핸들러</button>
+            <button v-on:click="clickHandler">버튼 핸들러</button>
+            <!-- 인라인 메서드 핸들링 -->
+            <button @click="count++">인라인 핸들러</button>
+        </div>
+        <!-- 이미지 테스트 -->
+        <div>
+            <img src="./ina.png" alt="" @load="show=true" v-bind:class="{hide: !show}">
+        </div>
+        <!-- 이벤트 테스트 -->
+        <div>
+            <div @scroll="handler">스크롤 컨텐츠</div>
+            <div @mousewheel="handler">마우스 휠 이벤트</div>
+        </div>
+        <!-- input 이벤트 -->
+        <div>
+            <input type="text" v-bind:value="message" v-on:input="handleInput">
+        </div>
+        <!-- radio, select 이벤트 -->
+        <div>
+            <div>
+                <label for=""><input type="checkbox" v-model="val" value="A"> A</label>
+                <label for=""><input type="checkbox" v-model="val" value="B"> B</label>
+                <label for=""><input type="checkbox" v-model="val" value="C"> C</label>
+            </div>
+            <div>
+                <label for=""><input type="radio" value="a" v-model="val">A</label>
+                <label for=""><input type="radio" value="b" v-model="val">B</label>
+                <label for=""><input type="radio" value="c" v-model="val">C</label>
+            </div>
+            <p>{{ val }}</p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+                show: false,
+                message: '',
+                val: [],
+            },
+            methods: {
+                clickHandler: function () {
+                    alert(`count::${this.count}`)
+                },
+                handler: function () {
+                    alert('마우스 핸들러');
+                },
+                handleInput: function (event) {
+                    this.message = event.target.value
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

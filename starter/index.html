@@ -10,7 +10,7 @@
     <div id="app">
         <h1>{{ message }}</h1>
         <ul>
-            <li v-for="item in items">{{ item.name }}</li>
+            <li v-for="(item, key, index) in items" v-bind:key="item.id">{{ item.name }}</li>
         </ul>
         <button v-on:click="handleClick">Click</button>
         <input type="text" v-model="message">
@@ -18,6 +18,23 @@
         <transition>
             <p v-if="show">Show case</p>
         </transition>
+        <input type="text" v-bind:value="message">
+        <input type="text" :value="message">
+        <div>
+            <h1>Count: {{ count }}</h1>
+            <button v-on:click="increment">Click!</button>
+        </div>
+        <div>
+            <h1>Class, Style bind</h1>
+            <p v-bind:class="{ 'is-active': active }">test</p>
+            <p v-bind:style="{ color: textColor, backgroundColor: bgColor }">color</p>
+        </div>
+        <div>
+            <img v-bind="item" />
+        </div>
+        <div>
+            <p ref="hello">Hello</p>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script>
@@ -43,12 +60,31 @@
                         power: 20
                     },
                 ],
-                show: false
+                show: false,
+                active: false,
+                textColor: 'red',
+                bgColor: 'gray',
+                count: 0,
+                item: {
+                    id: 1,
+                    src: '',
+                    alt: '테스트',
+                    width: 200,
+                    height: 200
+                }
+
             },
             methods: {
                 handleClick: function(event) {
                     alert(event.target)
+                },
+                increment: function(event) {
+                    this.count++;
                 }
+            },
+            mounted: function() {
+                console.log(this.$el);
+                console.log(this.$refs.hello);
             }
         })
     </script>
